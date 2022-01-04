@@ -4,7 +4,7 @@ namespace Vo1\Seat\AwoxFinder;
 
 use Seat\Services\AbstractSeatPlugin;
 
-class AwoxServiceProvider extends AbstractSeatPlugin
+class AwoxFinderServiceProvider extends AbstractSeatPlugin
 {
     public function boot()
     {
