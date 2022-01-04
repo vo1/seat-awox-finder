@@ -1,0 +1,31 @@
+{
+    "name": "vo1/seat-awox-finder-discord",
+    "description": "SeAT awox finder discord bot.",
+    "type": "seat-plugin",
+    "autoload": {
+        "psr-4": {
+            "Vo1\\Seat\\AwoxFinder\\": "src/",
+            "Vo1\\Seat\\AwoxFinder\\database\\seeds\\": "src/database/seeds/"
+        }
+    },
+    "require": {
+        "eveseat/web": "^3.0",
+        "eveseat/eveapi": "^3.0",
+        "eveseat/notifications": "^3.0",
+        "eveseat/services": "^3.0"
+    },
+    "authors": [{
+        "name": "Vo1",
+        "email": "insyon@gmail.com"
+    }],
+    "license": "GPL-3.0-or-later",
+    "minimum-stability": "alpha",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vo1\\Seat\\AwoxFinder\\AwoxFinderServiceProvider"
+            ]
+        }
+    }
+}
