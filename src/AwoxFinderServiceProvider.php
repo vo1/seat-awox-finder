@@ -42,16 +42,9 @@ class AwoxFinderServiceProvider extends AbstractSeatPlugin
      */
     public function register()
     {
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/awox.config.php', 'awox.config');
-
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/awox.sidebar.php',
-            'package.sidebar'
-        );
-
-        $this->registerPermissions(
-            __DIR__ . '/Config/awox.permissions.php', 'awox');
+        $this->mergeConfigFrom(__DIR__ . '/Config/awox.config.php', 'awox.config');
+        $this->mergeConfigFrom(__DIR__ . '/Config/awox.sidebar.php', 'package.sidebar');
+        $this->registerPermissions(__DIR__ . '/Config/awox.permissions.php', 'awox');
     }
 
     private function addMigrations()

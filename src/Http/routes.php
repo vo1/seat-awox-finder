@@ -10,19 +10,19 @@ Route::group([
         Route::get('/', [
             'as'   => 'awox.list',
             'uses' => 'AwoxController@list',
-            'middleware' => 'can:awox.view',
+            'middleware' => 'can:awox.read',
         ]);
 
         Route::post('/item', [
             'as'   => 'awox.create',
             'uses' => 'AwoxController@view',
-            'middleware' => 'can:awox.view',
+            'middleware' => 'can:awox.create',
         ]);
 
         Route::get('/item/{itemId}', [
             'as'   => 'awox.read',
             'uses' => 'AwoxController@read',
-            'middleware' => 'can:awox.add',
+            'middleware' => 'can:awox.read',
         ]);
 
         Route::post('/item/{itemId}', [
