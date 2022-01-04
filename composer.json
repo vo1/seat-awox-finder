@@ -9,10 +9,8 @@
         }
     },
     "require": {
-        "eveseat/web": "^3.0",
-        "eveseat/eveapi": "^3.0",
-        "eveseat/notifications": "^3.0",
-        "eveseat/services": "^3.0"
+        "eveseat/eveapi": "^4.8",
+        "eveseat/services": "^4.1"
     },
     "authors": [{
         "name": "Vo1",
