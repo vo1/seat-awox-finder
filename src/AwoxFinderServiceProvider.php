@@ -59,12 +59,12 @@ class AwoxFinderServiceProvider extends AbstractSeatPlugin
 
     public function getPackageRepositoryUrl(): string
     {
-        return 'https://github.com/vo1/seat-awox-finder-discord';
+        return 'https://github.com/vo1/seat-awox-finder';
     }
 
     public function getPackagistPackageName(): string
     {
-        return 'vo1/seat-awox-finder-discord';
+        return 'vo1/seat-awox-finder';
     }
 
     public function getPackagistVendorName(): string
