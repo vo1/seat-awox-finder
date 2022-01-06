@@ -1,6 +1,6 @@
 {
-    "name": "vo1/seat-awox-finder-discord",
-    "description": "SeAT awox finder discord bot.",
+    "name": "vo1/seat-awox-finder",
+    "description": "SeAT awox finder",
     "type": "seat-plugin",
     "autoload": {
         "psr-4": {
