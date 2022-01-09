@@ -12,9 +12,7 @@
                 <div class="input-group input-group-sm">
                     <ul class="nav nav-pills">
                         <li class="nav-item">
-                            <a class="nav-link badge-success" href="{{ route('awox.form.create') }}">
-                                {{ trans('awox::awox.create') }}
-                            </a>
+                            <a class="nav-link fas fa-user-plus" href="{{ route('awox.form.create') }}"></a>
                         </li>
                     </ul>
                 </div>
