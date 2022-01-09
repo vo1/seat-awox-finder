@@ -38,7 +38,7 @@ class AwoxController extends Controller
      */
     public function formSettings()
     {
-        $discordUrls = setting(AwoxFinder::SETTINGS_DC_URLS, true);
+        $discordUrls = setting(AwoxFinder::SETTINGS_DC_URLS, true) ?? [];
         $discordUrls = implode("\n", $discordUrls);
         return view('awox::forms.settings', compact('discordUrls'));
     }

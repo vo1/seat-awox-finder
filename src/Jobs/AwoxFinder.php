@@ -39,7 +39,7 @@ class AwoxFinder extends AbstractJob
      */
     private function dispatchMessage()
     {
-        $webhookUrls = setting(self::SETTINGS_DC_URLS, true);
+        $webhookUrls = setting(self::SETTINGS_DC_URLS, true) ?? [];
         $corporation = CorporationInfo::find($this->row->universe_name->affiliation->corporation_id);
         $alliance = isset($this->row->universe_name->affiliation->corporation_id)
             ? Alliance::find($this->row->universe_name->affiliation->alliance_id)
