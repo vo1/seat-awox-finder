@@ -9,6 +9,7 @@ use Seat\Web\Http\Controllers\Controller;
 use Vo1\Seat\AwoxFinder\Http\DataTables\AwoxersDataTable;
 use Vo1\Seat\AwoxFinder\Jobs\AwoxFinder;
 use Vo1\Seat\AwoxFinder\Models\Awoxer;
+use Vo1\Seat\AwoxFinder\Commands\Awox\Find;
 
 class AwoxController extends Controller
 {
@@ -40,7 +41,9 @@ class AwoxController extends Controller
     {
         $discordUrls = setting(AwoxFinder::SETTINGS_DC_URLS, true) ?? [];
         $discordUrls = implode("\n", $discordUrls);
-        return view('awox::forms.settings', compact('discordUrls'));
+        $allianceIds = setting(Find::SETTINGS_ALLIANCE_IDS, true) ?? [];
+        $allianceIds = implode("\n", $allianceIds);
+        return view('awox::forms.settings', compact('discordUrls', 'allianceIds'));
     }
 
     /**

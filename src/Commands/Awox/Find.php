@@ -10,6 +10,8 @@ use Vo1\Seat\AwoxFinder\Jobs\AwoxFinder;
 
 class Find extends Command
 {
+    const SETTINGS_ALLIANCE_IDS = 'awox.settings.alliance_ids';
+
     /**
      * The name and signature of the console command.
      *
@@ -27,13 +29,16 @@ class Find extends Command
     /**
      * Execute the console command.
      */
-    public function handle(AwoxersDataTable $dt, $allianceId = 1411711376)
+    public function handle(AwoxersDataTable $dt)
     {
-        $alliance = Alliance::find($allianceId);
-        foreach ($dt->query()->get() as $row) {
-            $standing = $dt->getStandingFromContacts($alliance->contacts, $row, $allianceId);
-            if ($standing > 0) {
-                AwoxFinder::dispatch($row, $standing);
+        $allianceIds = setting(self::SETTINGS_ALLIANCE_IDS, true);
+        foreach ($allianceIds as $allianceId) {
+            $alliance = Alliance::find($allianceId);
+            foreach ($dt->query()->get() as $row) {
+                $standing = $dt->getStandingFromContacts($alliance->contacts, $row, $allianceId);
+                if ($standing > 0) {
+                    AwoxFinder::dispatch($row, $standing);
+                }
             }
         }
     }

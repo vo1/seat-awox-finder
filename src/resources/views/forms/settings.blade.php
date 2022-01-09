@@ -12,6 +12,12 @@
         <div class="card-body">
             <form role="form" action="{{ route('awox.settings') }}" method="post">
                 <div class="card-body">
+                    <p>{{ trans_choice('awox::awox.alliance_ids', 1) }}</p>
+                    <div class="form-group">
+                        <textarea class="form-control input-md" name="alliance_ids" rows="5">{{ $allianceIds }}</textarea>
+                    </div>
+                </div>
+                <div class="card-body">
                     <p>{{ trans_choice('awox::awox.discord_urls', 1) }}</p>
                     <div class="form-group">
                         <textarea class="form-control input-md" name="discord_urls" rows="5">{{ $discordUrls }}</textarea>

@@ -14,6 +14,7 @@ return [
     'entry.added'       => 'Awoxer has been added to list.',
     'entry.updated'     => 'Awoxer has been updated.',
     'discord_urls'      => 'Discord webhook urls list:',
+    'alliance_ids'      => 'Primary Alliances IDs:',
     'settings'          => 'Awox Finder Configuration',
     'settings.updated'  => 'Settings has been updated.'
 ];
