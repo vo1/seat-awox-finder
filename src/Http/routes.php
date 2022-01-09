@@ -48,5 +48,17 @@ Route::group([
             'uses' => 'AwoxController@delete',
             'middleware' => 'can:awox.delete',
         ]);
+
+        Route::get('/settings', [
+            'as'   => 'awox.form.settings',
+            'uses' => 'AwoxController@formSettings',
+            'middleware' => 'can:awox.delete',
+        ]);
+
+        Route::post('/settings', [
+            'as'   => 'awox.settings',
+            'uses' => 'AwoxController@settings',
+            'middleware' => 'can:awox.delete',
+        ]);
     });
 });

@@ -4,12 +4,52 @@ namespace Vo1\Seat\AwoxFinder\Http\DataTables;
 
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Eveapi\Models\Corporation\CorporationStanding;
 use Vo1\Seat\AwoxFinder\Models\Awoxer;
 use Yajra\DataTables\Services\DataTable;
 
 class AwoxersDataTable extends DataTable
 {
+    /**
+     * @param $contacts
+     * @param $row
+     * @return int
+     */
+    public function getStandingFromContacts($contacts, $row, $myAllianceId = null)
+    {
+        $corporationId = $row->universe_name->affiliation->corporation_id;
+        $allianceId = $row->universe_name->affiliation->alliance_id;
+        $corporation = isset($row->universe_name->affiliation->corporation_id)
+            ? CorporationInfo::find($row->universe_name->affiliation->corporation_id)
+            : null;
+        $alliance = isset($row->universe_name->affiliation->alliance_id)
+            ? Alliance::find($row->universe_name->affiliation->alliance_id)
+            : null;
+        if (!$corporation) {
+            return 0;
+        }
+        $myAllianceId = ($myAllianceId == null ? auth()->user()->main_character->affiliation->alliance_id : $myAllianceId);
+        $result = -10;
+        if ($allianceId == $myAllianceId) {
+            return 10;
+        }
+        foreach ($contacts as $contact) {
+            if (($contact->standing > 0) && ($contact->standing > $result)) {
+                if (($contact->contact_type == 'corporation') && ($corporationId == $contact->contact_id)) {
+                    $result = $contact->standing;
+                    if ($result == 5) {
+                        dd($contact);
+                    }
+                } elseif ($alliance && ($contact->contact_type == 'alliance') && ($allianceId == $contact->contact_id)) {
+                    $result = $contact->standing;
+                    if ($result == 5) {
+                        dd($contact);
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+
     /**
      * @return \Illuminate\Http\JsonResponse|\Yajra\DataTables\DataTableAbstract|\Yajra\DataTables\EloquentDataTable
      */
@@ -20,28 +60,34 @@ class AwoxersDataTable extends DataTable
                 return $row->universe_name->name ?? $row->name;
             })
             ->editColumn('standing', function ($row) {
-
-                return 'UNKNOWN';
-                dd($row->universe_name->affiliation);
-                $alliance = Alliance::find(auth()->user()->main_character->affiliation->alliance_id);
-                $corporation = CorporationInfo::find(auth()->user()->main_character->affiliation->corporation_id);
-                dd($corporation->contacts);
-                $corpId = $row->universe_name->affiliation->corporation_id;
-                $allianceId = $row->universe_name->affiliation->alliance_id;
-                $currentStanding = -10;
-                foreach ($corp->standings as $standing) {
-                    if ($standing->from_type === 'faction') {
-                        var_dump($standing->from_id);
-                    }
-                }
-                return $row->universe_name->name;
+                $standing = max(
+                    $this->getStandingFromContacts(
+                        CorporationInfo::find(auth()->user()->main_character->affiliation->corporation_id)->contacts,
+                        $row
+                    ),
+                    $this->getStandingFromContacts(
+                        Alliance::find(auth()->user()->main_character->affiliation->alliance_id)->contacts,
+                        $row
+                    )
+                );
+                return view('awox::partials.standing', compact('standing'))->render();
             })
             ->editColumn('alliance', function ($row) {
+                if (!isset($row->universe_name->affiliation->alliance_id)) {
+                    return 'UNKNOWN';
+                }
                 $alliance = Alliance::find($row->universe_name->affiliation->alliance_id);
                 return view('web::partials.alliance', compact('alliance'))->render();
             })
             ->editColumn('corporation', function ($row) {
+                if (!isset($row->universe_name->affiliation->corporation_id)) {
+                    return 'UNKNOWN';
+                }
                 $corporation = CorporationInfo::find($row->universe_name->affiliation->corporation_id);
+                if (!$corporation) {
+                    return $row->universe_name->affiliation->corporation->name;
+                    return 'NOT RECORDED';
+                }
                 return view('web::partials.corporation', compact('corporation'))->render();
             })
             ->editColumn('description', function ($row) {
@@ -50,7 +96,7 @@ class AwoxersDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 return view('awox::partials.view', compact('row'))->render();
             })
-            ->rawColumns(['action', 'alliance', 'corporation'])
+            ->rawColumns(['action', 'alliance', 'corporation', 'standing'])
             ->make(true);
     }
 

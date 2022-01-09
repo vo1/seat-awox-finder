@@ -8,6 +8,10 @@ use Vo1\Seat\AwoxFinder\Jobs\Universe\Ids as Name2Id;
 
 class AwoxApiController extends ApiController
 {
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function find($name)
     {
         $job = new Name2Id();

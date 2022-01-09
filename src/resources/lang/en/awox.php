@@ -12,5 +12,8 @@ return [
     'standing'          => 'Standing',
     'entry.deleted'     => 'Awoxer has been deleted from list.',
     'entry.added'       => 'Awoxer has been added to list.',
-    'entry.updated'     => 'Awoxer has been updated.'
+    'entry.updated'     => 'Awoxer has been updated.',
+    'discord_urls'      => 'Discord webhook urls list:',
+    'settings'          => 'Awox Finder Configuration',
+    'settings.updated'  => 'Settings has been updated.'
 ];

@@ -17,6 +17,7 @@ class Awoxer extends Model
         'description',
         'added_by',
     ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -25,6 +26,9 @@ class Awoxer extends Model
         return $this->belongsTo(CharacterInfo::class, 'id', 'character_id');
     }
 
+    /**
+     * @return mixed
+     */
     public function universe_name()
     {
         return $this->hasOne(UniverseName::class, 'entity_id', 'id')
