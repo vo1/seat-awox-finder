@@ -36,14 +36,8 @@ class AwoxersDataTable extends DataTable
             if (($contact->standing > 0) && ($contact->standing > $result)) {
                 if (($contact->contact_type == 'corporation') && ($corporationId == $contact->contact_id)) {
                     $result = $contact->standing;
-                    if ($result == 5) {
-                        dd($contact);
-                    }
                 } elseif ($alliance && ($contact->contact_type == 'alliance') && ($allianceId == $contact->contact_id)) {
                     $result = $contact->standing;
-                    if ($result == 5) {
-                        dd($contact);
-                    }
                 }
             }
         }
