@@ -31,7 +31,7 @@ class Find extends Command
      */
     public function handle(AwoxersDataTable $dt)
     {
-        $allianceIds = setting(self::SETTINGS_ALLIANCE_IDS, true);
+        $allianceIds = setting(self::SETTINGS_ALLIANCE_IDS, true) ?? [];
         foreach ($allianceIds as $allianceId) {
             $alliance = Alliance::find($allianceId);
             foreach ($dt->query()->get() as $row) {
