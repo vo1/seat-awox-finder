@@ -58,6 +58,11 @@ class AwoxController extends Controller
             $urls = explode("\n", $urls);
         }
         setting([ AwoxFinder::SETTINGS_DC_URLS, $urls], true);
+        $ids = $request->input('alliance_ids');
+        if ($ids) {
+            $ids = explode("\n", $ids);
+        }
+        setting([ Find::SETTINGS_ALLIANCE_IDS, $ids], true);
         return redirect()->route('awox.form.settings')->with('success', trans('awox::awox.settings.updated'));
     }
 
