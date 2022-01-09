@@ -18,7 +18,7 @@ class CreateAwoxersTable extends Migration
             $table->bigInteger('added_by')->nullable();
             $table->datetime('created_at')->default(DB::raw('NOW()'));
             $table->datetime('updated_at')->default(DB::raw('NOW()'));
-            $table->datetime('pinged_at')->default(DB::raw('DATE_SUB(NOW(), 1 DAY)'));
+            $table->datetime('pinged_at')->default(DB::raw('DATE_SUB(NOW(), INTERVAL 1 DAY)'));
             $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->index('name');
