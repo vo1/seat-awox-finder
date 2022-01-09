@@ -33,11 +33,12 @@ class AwoxersDataTable extends DataTable
             return 10;
         }
         foreach ($contacts as $contact) {
-            if (($contact->standing > 0) && ($contact->standing > $result)) {
+            $contactStanding = ($contact->standing == 0) ? '0.001' : $contact->standing;
+            if (($contactStanding > 0) && ($contactStanding > $result)) {
                 if (($contact->contact_type == 'corporation') && ($corporationId == $contact->contact_id)) {
-                    $result = $contact->standing;
+                    $result = $contactStanding;
                 } elseif ($alliance && ($contact->contact_type == 'alliance') && ($allianceId == $contact->contact_id)) {
-                    $result = $contact->standing;
+                    $result = $contactStanding;
                 }
             }
         }
