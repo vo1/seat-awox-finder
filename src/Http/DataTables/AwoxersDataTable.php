@@ -120,11 +120,11 @@ class AwoxersDataTable extends DataTable
     public function getColumns()
     {
         return [
-            ['data' => 'name', 'title' => trans_choice('web::seat.name', 1), 'orderable' => false, 'filterable' => false],
+            ['data' => 'name', 'title' => trans_choice('web::seat.name', 1), 'orderable' => true, 'filterable' => false],
             ['data' => 'standing', 'title' => trans_choice('awox::awox.standing', 1), 'orderable' => false, 'filterable' => false, 'searchable' => false ],
             ['data' => 'alliance', 'title' => trans_choice('web::seat.alliance', 1), 'orderable' => false, 'filterable' => false, 'searchable' => false],
             ['data' => 'corporation', 'title' => trans_choice('web::seat.corporation', 1), 'orderable' => false, 'filterable' => false, 'searchable' => false],
-            ['data' => 'description', 'title' => trans_choice('awox::awox.description', 2), 'orderable' => false, 'filterable' => false],
+            ['data' => 'description', 'title' => trans_choice('awox::awox.description', 2), 'orderable' => true, 'filterable' => false],
         ];
     }
 }
