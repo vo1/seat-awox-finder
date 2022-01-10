@@ -90,7 +90,7 @@ class AwoxController extends Controller
         $action = 'update';
         $row = Awoxer::find($id);
         $alliance = auth()->user()->main_character->affiliation->alliance;
-        return view('awox::form', compact('alliance', 'action', 'row'));
+        return view('awox::forms.awoxer', compact('alliance', 'action', 'row'));
     }
 
     /**
