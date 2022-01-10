@@ -9,6 +9,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ trans('awox::awox.list') }}</h3>
             <div class="card-tools">
+                @can('awox.create')
                 <div class="input-group input-group-sm">
                     <ul class="nav nav-pills">
                         <li class="nav-item">
@@ -16,6 +17,7 @@
                         </li>
                     </ul>
                 </div>
+                @endcan
             </div>
         </div>
         <div class="card-body">

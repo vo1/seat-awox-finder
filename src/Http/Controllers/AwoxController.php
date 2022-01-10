@@ -19,6 +19,9 @@ class AwoxController extends Controller
      */
     public function list(AwoxersDataTable $dataTable)
     {
+        if (!auth()->user()->can('awox.read')) {
+            abort(403);
+        }
         $alliance = Alliance::find(auth()->user()->main_character->affiliation->alliance_id);
         return $dataTable->render('awox::list', compact('alliance'));
     }
@@ -28,6 +31,9 @@ class AwoxController extends Controller
      */
     public function formCreate()
     {
+        if (!auth()->user()->can('awox.create')) {
+            abort(403);
+        }
         $action = 'create';
         $alliance = auth()->user()->main_character->affiliation->alliance;
         return view('awox::forms.awoxer', compact('alliance', 'action'));
@@ -39,6 +45,9 @@ class AwoxController extends Controller
      */
     public function formSettings()
     {
+        if (!auth()->user()->can('awox.delete')) {
+            abort(403);
+        }
         $discordUrls = setting(AwoxFinder::SETTINGS_DC_URLS, true) ?? [];
         $discordUrls = implode("\n", $discordUrls);
         $allianceIds = setting(Find::SETTINGS_ALLIANCE_IDS, true) ?? [];
@@ -53,6 +62,9 @@ class AwoxController extends Controller
      */
     public function settings(Request $request)
     {
+        if (!auth()->user()->can('awox.delete')) {
+            abort(403);
+        }
         $urls = $request->input('discord_urls');
         if ($urls) {
             $urls = explode("\n", $urls);
@@ -72,6 +84,9 @@ class AwoxController extends Controller
      */
     public function formRead($id)
     {
+        if (!auth()->user()->can('awox.update')) {
+            abort(403);
+        }
         $action = 'update';
         $row = Awoxer::find($id);
         $alliance = auth()->user()->main_character->affiliation->alliance;
@@ -84,6 +99,9 @@ class AwoxController extends Controller
      */
     public function create(Request $request)
     {
+        if (!auth()->user()->can('awox.create')) {
+            abort(403);
+        }
         Awoxer::create([
             'id' => $request->input('id'),
             'added_by' => auth()->user()->id,
@@ -108,6 +126,9 @@ class AwoxController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('awox.update')) {
+            abort(403);
+        }
         Awoxer::find($id)->update(['description' => $request->input('description')]);
         return redirect()->route('awox.list')->with('success', trans('awox::awox.entry.updated'));
     }
@@ -118,6 +139,9 @@ class AwoxController extends Controller
      */
     public function delete($id)
     {
+        if (!auth()->user()->can('awox.delete')) {
+            abort(403);
+        }
         Awoxer::find($id)->delete();
         return redirect()->route('awox.list')->with('success', trans('awox::awox.entry.deleted'));
     }
