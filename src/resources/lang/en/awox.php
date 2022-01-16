@@ -19,7 +19,9 @@ return [
     'settings.updated'  => 'Settings has been updated.',
     'added_by'          => 'Added By',
     'reason'            => 'Reason',
+    'reason.placeholder' => 'Type in addition reason',
     'affiliation'       => 'Affiliation',
+    'affiliation.placeholder' => 'Type in affiliation information',
     'created_at'        => 'Created',
-    'updated_at'        => 'Updated'
+    'updated_at'        => 'Updated',
 ];
