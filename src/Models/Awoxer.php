@@ -10,12 +10,14 @@ class Awoxer extends Model
 {
     protected $primaryKey = 'id';
     public $incrementing = false;
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = []; //['created_at', 'updated_at'];
     protected $fillable = [
         'id',
         'name',
         'description',
         'added_by',
+        'reason',
+        'affiliation'
     ];
 
     /**

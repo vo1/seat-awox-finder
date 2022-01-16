@@ -3,7 +3,9 @@
 namespace Vo1\Seat\AwoxFinder\Http\DataTables;
 
 use Seat\Eveapi\Models\Alliances\Alliance;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Web\Models\User;
 use Vo1\Seat\AwoxFinder\Models\Awoxer;
 use Yajra\DataTables\Services\DataTable;
 
@@ -54,6 +56,18 @@ class AwoxersDataTable extends DataTable
             ->editColumn('name', function ($row) {
                 return $row->universe_name->name ?? $row->name;
             })
+            ->editColumn('added_by', function ($row) {
+                if ($row->added_by && ($user = User::find($row->added_by))) {
+                    return view('web::partials.character', ['character' => $user->main_character])->render();
+                }
+                return 'NOT FOUND';
+            })
+            ->editColumn('created_at', function ($row) {
+                return view('web::partials.date', [ 'datetime' => $row->created_at ]);
+            })
+            ->editColumn('updated_at', function ($row) {
+                return view('web::partials.date', [ 'datetime' => $row->updated_at ]);
+            })
             ->editColumn('standing', function ($row) {
                 $standing = max(
                     $this->getStandingFromContacts(
@@ -91,7 +105,7 @@ class AwoxersDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 return view('awox::partials.view', compact('row'))->render();
             })
-            ->rawColumns(['action', 'alliance', 'corporation', 'standing'])
+            ->rawColumns(['action', 'alliance', 'corporation', 'standing', 'added_by'])
             ->make(true);
     }
 
@@ -121,6 +135,11 @@ class AwoxersDataTable extends DataTable
     {
         return [
             ['data' => 'name', 'title' => trans_choice('web::seat.name', 1), 'orderable' => true, 'filterable' => false],
+            ['data' => 'added_by', 'title' => trans_choice('awox::awox.added_by', 1), 'orderable' => true, 'filterable' => true],
+            ['data' => 'created_at', 'title' => trans_choice('awox::awox.created_at', 1), 'orderable' => true, 'filterable' => true],
+            ['data' => 'updated_at', 'title' => trans_choice('awox::awox.updated_at', 1), 'orderable' => true, 'filterable' => true],
+            ['data' => 'reason', 'title' => trans_choice('awox::awox.reason', 1), 'orderable' => true, 'filterable' => true, 'searchable' => true ],
+            ['data' => 'affiliation', 'title' => trans_choice('awox::awox.affiliation', 1), 'orderable' => true, 'filterable' => true, 'searchable' => true ],
             ['data' => 'standing', 'title' => trans_choice('awox::awox.standing', 1), 'orderable' => false, 'filterable' => false, 'searchable' => false ],
             ['data' => 'alliance', 'title' => trans_choice('web::seat.alliance', 1), 'orderable' => false, 'filterable' => false, 'searchable' => false],
             ['data' => 'corporation', 'title' => trans_choice('web::seat.corporation', 1), 'orderable' => false, 'filterable' => false, 'searchable' => false],

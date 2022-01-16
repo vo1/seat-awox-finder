@@ -106,6 +106,8 @@ class AwoxController extends Controller
             'id' => $request->input('id'),
             'added_by' => auth()->user()->id,
             'name' => $request->input('name'),
+            'reason'   => $request->input('reason'),
+            'affiliation' => $request->input('affiliation'),
             'description' => $request->input('description'),
         ]);
 
@@ -129,7 +131,11 @@ class AwoxController extends Controller
         if (!auth()->user()->can('awox.update')) {
             abort(403);
         }
-        Awoxer::find($id)->update(['description' => $request->input('description')]);
+        Awoxer::find($id)->update([
+            'description' => $request->input('description'),
+            'reason' => $request->input('reason'),
+            'affiliation' => $request->input('affiliation')
+        ]);
         return redirect()->route('awox.list')->with('success', trans('awox::awox.entry.updated'));
     }
 

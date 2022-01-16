@@ -21,6 +21,14 @@
                         <span class="help-block not-found" style="display: none;">Nothing found.</span>
                     </div>
                     <div class="form-group">
+                        <label for="reason" class="control-label">{{ trans_choice('awox::awox.reason', 1) }}</label>
+                        <input type="text" class="form-control" id="reason" name="reason" placeholder="{{ trans('awox::awox.reason.placeholder') }}" value="{{ $row->reason ?? '' }}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="affiliation" class="control-label">{{ trans_choice('web::seat.affiliation', 1) }}</label>
+                        <input type="text" class="form-control" id="affiliation" name="affiliation" placeholder="{{ trans('awox::awox.affiliation.placeholder') }}" value="{{ $row->affiliation ?? '' }}"/>
+                    </div>
+                    <div class="form-group">
                         <label for="description">{{ trans('awox::awox.description') }}</label>
                         <textarea class="form-control" name="description" rows="3" placeholder="{{ trans('awox::awox.description.placeholder') }}">{{ $row->description ?? '' }}</textarea>
                     </div>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Vo1\Seat\AwoxFinder\Http\DataTables\AwoxersDataTable;
 use Vo1\Seat\AwoxFinder\Jobs\AwoxFinder;
+use Vo1\Seat\AwoxFinder\Models\Awoxer;
 
 class Find extends Command
 {

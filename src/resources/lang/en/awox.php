@@ -16,5 +16,10 @@ return [
     'discord_urls'      => 'Discord webhook urls list:',
     'alliance_ids'      => 'Primary Alliances IDs:',
     'settings'          => 'Awox Finder Configuration',
-    'settings.updated'  => 'Settings has been updated.'
+    'settings.updated'  => 'Settings has been updated.',
+    'added_by'          => 'Added By',
+    'reason'            => 'Reason',
+    'affiliation'       => 'Affiliation',
+    'created_at'        => 'Created',
+    'updated_at'        => 'Updated'
 ];

@@ -7,6 +7,7 @@ use GuzzleHttp\RequestOptions;
 use Seat\Eveapi\Jobs\AbstractJob;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Web\Models\User;
 use Vo1\Seat\AwoxFinder\Models\Awoxer;
 
 class AwoxFinder extends AbstractJob
@@ -49,6 +50,18 @@ class AwoxFinder extends AbstractJob
             : '';
         $client = new Client(['timeout' => 5]);
         foreach ($webhookUrls as $webhookUrl) {
+            $descriptionText = $this->row->description ? "Note: " . $this->row->description : '';
+            try {
+                $username = User::find($this->row->added_by)->main_character->name;
+            } catch (\Throwable $e) {
+                $username = 'NOT_FOUND';
+            }
+            $descriptionText .= sprintf("\nReason: **%s**.", $this->row->reason);
+            $descriptionText .= sprintf("\nAffiliation: **%s**.", $this->row->affiliation);
+            $descriptionText .= sprintf("\nAdded by **%s** at %s.", $username, $this->row->created_at);
+            if ($this->row->created_at < $this->row->updated_at) {
+                $descriptionText .= sprintf("\nLast update: %s", $this->row->updated_at);
+            }
             $client->post(
                 $webhookUrl,
                 [
@@ -60,13 +73,14 @@ class AwoxFinder extends AbstractJob
                             $corporation->name,
                             $allianceText
                         ),
+
                         'embeds' => [
                             [
                                 'title' => "Information",
                                 'description' => sprintf(
                                     "https://zkillboard.com/character/%s/\n%s",
                                     $this->row->id,
-                                    $this->row->description ? "Note:\n" . $this->row->description : ''
+                                    $descriptionText
                                 ),
                                 'color' => '7506394',
                             ]
@@ -82,10 +96,10 @@ class AwoxFinder extends AbstractJob
      */
     public function handle()
     {
-        if (carbon($this->row->pinged_at)->add(12, 'hour')->lt(carbon())) {
+//        if (carbon($this->row->pinged_at)->add(12, 'hour')->lt(carbon())) {
             $this->dispatchMessage();
-            $this->row->pinged_at = carbon();
-            $this->row->save();
-        }
+//            $this->row->pinged_at = carbon();
+//            $this->row->save();
+//        }
     }
 }
