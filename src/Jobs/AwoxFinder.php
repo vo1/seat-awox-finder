@@ -96,10 +96,10 @@ class AwoxFinder extends AbstractJob
      */
     public function handle()
     {
-//        if (carbon($this->row->pinged_at)->add(12, 'hour')->lt(carbon())) {
+        if (carbon($this->row->pinged_at)->add(12, 'hour')->lt(carbon())) {
             $this->dispatchMessage();
-//            $this->row->pinged_at = carbon();
-//            $this->row->save();
-//        }
+            $this->row->pinged_at = carbon();
+            $this->row->save();
+        }
     }
 }
